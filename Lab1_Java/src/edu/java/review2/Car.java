@@ -3,12 +3,12 @@ package edu.java.review2;
 // 객체(Object): 프로그램에서 만들려고 대상. 데이터와 기능을 가질 수 있음.
 // 클래스(Class): 객체를 만들기 위해서 프로그래밍 언어로 작성하는 코드. 
 //     객체를 만들기 위한 설계도.
-//     멤버 변수(프로퍼티, property) + 메서드(method)
+//     멤버 변수(프로퍼티 property, 필드 field) + 메서드(method)
 //     클래스는 데이터 타입 - 변수를 선언할 때 변수 타입으로 클래스 이름을 사용.
 // 인스턴스(Instance): 클래스를 사용해서 메모리에 생성된 객체.
 
 public class Car {
-	// 자동차가 가져야 하는 속성, 데이터 - 멤버 변수, property
+	// 자동차가 가져야 하는 속성, 데이터 - 멤버 변수, property, field
 	// 수식어 변수타입 변수이름 [= 값];
 	private double fuel;  // 연료의 양
 	private double speed; // 자동차의 속력
@@ -58,6 +58,9 @@ public class Car {
 		return this.speed;
 	}
 	
+	// System.out.println() 메서드 안에서 자동으로 호출되는 메서드.
+	// toString() 메서드를 작성하지 않은 경우에는
+	// "패키지이름.클래스이름@주소값" 형식의 문자열이 println()에 의해서 출력.
 	public String toString() {
 		return "Car 계기판{speed=" + this.speed +
 				", fuel=" + this.fuel + "}";

@@ -10,6 +10,7 @@ public class ReviewMain2 {
 		Car myCar = new Car();
 		// 지역 변수(local variable): 메서드가 실행되는 동안에만 사용되는 변수.
 		System.out.println(myCar);
+		// System.out.println(myCar.toString()); 호출하는 것과 동일.
 		
 		// myCar.fuel = 100;  // Error 발생.
 		// myCar 인스턴스의 멤버 변수 값을 변경하려고 할 때, 직접 변경할 수 없음.
@@ -32,7 +33,7 @@ public class ReviewMain2 {
 		
 		// with-args constructor를 호출
 		Car myCar2 = new Car(20, 0);
-		System.out.println(myCar2);
+		System.out.println(myCar2);  // myCar2.toString() 자동 호출.
 		myCar2.drive(50);
 		
 		// myCar2의 계기판
@@ -40,6 +41,13 @@ public class ReviewMain2 {
 				"myCar 계기판{속력=" + myCar2.getSpeed() + 
 				", 연료=" + myCar2.getFuel() + "}");
 		System.out.println(myCar2.toString());
+		
+		System.out.println();
+		System.out.println("상속(Inheritance)");
+		
+		// HybridCar 타입의 변수 선언 = HybridCar 인스턴스 생성;
+		HybridCar hCar = new HybridCar();
+		System.out.println(hCar);  // toString() 메서드 자동 호출
 		
 	}
 
