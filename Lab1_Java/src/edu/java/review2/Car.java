@@ -8,7 +8,7 @@ package edu.java.review2;
 // 인스턴스(Instance): 클래스를 사용해서 메모리에 생성된 객체.
 
 public class Car {
-	// 자동차가 가져야 하는 속성, 데이터 - 멤버 변수
+	// 자동차가 가져야 하는 속성, 데이터 - 멤버 변수, property
 	// 수식어 변수타입 변수이름 [= 값];
 	private double fuel;  // 연료의 양
 	private double speed; // 자동차의 속력
@@ -34,13 +34,15 @@ public class Car {
 	
 	// 자동차가 가져야 하는 기능 - 메서드
 	// 수식어 리턴타입 메서드이름(변수 선언, ...) { ... }
-	// 파라미터(parameter): 메서드 선언부(이름 옆 괄호 안)에서 선언하는 변수
+	// 파라미터(parameter): 메서드 선언부(이름 옆 괄호 안)에서 선언하는 (지역) 변수.
 	//   메서드를 호출하는 곳에서 전달한 값(argument)을 저장하기 위한 변수.
 	public void drive(double speed) {
 		this.speed = speed;
 		System.out.println("현재 연료: " + this.fuel + ", 속력: " + this.speed);
 	}
 }
+
+
 
 
 
