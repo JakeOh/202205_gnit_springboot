@@ -40,9 +40,27 @@ public class Car {
 		this.speed = speed;
 		System.out.println("현재 연료: " + this.fuel + ", 속력: " + this.speed);
 	}
+	
+	// setter: private으로 감춰져 있는 멤버 변수의 값을 변경해주는 public 메서드.
+	// 리턴타입 void: 메서드가 아무 값도 반환하지 않을 때(return 문장이 없을 
+	public void setFuel(double fuel) {
+		// 멤버 변수(field, property)의 값을 전달받은 argument로 변경
+		this.fuel = fuel;
+	}
+	
+	// getter: private으로 감춰져 있는 멤버 변수의 값을 반환하는 public 메서드.
+	public double getFuel() {
+		// 인스턴스가 가지고 있는 fuel 멤버 변수의 값을 메서드를 호출한 곳으로 반환.
+		return this.fuel;
+	}
+	
+	public double getSpeed() {
+		return this.speed;
+	}
+	
+	public String toString() {
+		return "Car 계기판{speed=" + this.speed +
+				", fuel=" + this.fuel + "}";
+	}
+	
 }
-
-
-
-
-
