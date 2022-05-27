@@ -49,6 +49,19 @@ public class ReviewMain2 {
 		HybridCar hCar = new HybridCar();
 		System.out.println(hCar);  // toString() 메서드 자동 호출
 		
+		// super 클래스에서 상속받은 메서드 호출.
+		hCar.setFuel(10.5);
+		System.out.println("fuel: " + hCar.getFuel());
+		System.out.println("speed: " + hCar.getSpeed());
+		
+		// sub 클래스에서 확장된(추가로 선언한) 메서드 호출
+		System.out.println("battery: " + hCar.getBattery());
+		hCar.setBattery(100);
+		System.out.println("battery: " + hCar.getBattery());
+		
+		System.out.println();
+		hCar.drive(30);
+		
 	}
 
 }
