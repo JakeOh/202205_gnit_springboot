@@ -1,6 +1,29 @@
 package edu.java.review5;
 
+// 클래스 선언되는 위치:
+// 1. 외부 클래스
+// 2. 내부 클래스
+//    (1) 멤버 내부 클래스(member inner class)
+//        클래스 내부 중에서 멤버 선언 위치에서 정의하는 클래스
+//    (2) 지역 내부 클래스(local inner class)
+//        메서드 내부에서 정의하는, 이름을 갖는 클래스.
+//        지역 클래스는 다른 외부 클래스나 다른 메서드에서 객체를 생성할 수 없음!
+//        선언된 메서드 안에서만 객체를 생성하는 용도로 사용할 수 있음.
+//    (3) (지역) 익명 클래스(anonymous inner class)
+//        메서드 내부에서 정의하는, 이름을 갖지 않는 클래스.
+//        클래스를 선언(정의)하면서 객체의 생성까지 하기 위한 클래스.
+// 클래스 멤버: 멤버 변수(프로퍼티), 메서드, 생성자
+
 public class ReviewMain5 {
+	
+	// 멤버 내부 클래스
+	public static class MariaDbQuery implements DatabaseQuery {
+		@Override
+		public int insert(int id) {
+			System.out.println("MariaDb insert(id=" + id + ")");
+			return 1;
+		}
+	}
 
 	public static void main(String[] args) {
 		System.out.println("인터페이스(Interface)");
@@ -20,11 +43,47 @@ public class ReviewMain5 {
 		OracleDatabaseQuery query = new OracleDatabaseQuery();
 		query.insert(10);
 		
-		// 다형성
+		// 다형성: SuperType var = new SubType();
 		DatabaseQuery query2 = new OracleDatabaseQuery();
-	}
+		int result = query2.insert(20);
+		System.out.println("result=" + result);
+		
+		System.out.println();
+		// 멤버 내부 클래스의 객체 생성
+		DatabaseQuery mariaDb = new MariaDbQuery();
+		result = mariaDb.insert(30);
+		System.out.println("result=" + result);
+		
+		// 지역 내부 클래스 선언(정의)
+		class MongoDbQuery implements DatabaseQuery {
+			@Override
+			public int insert(int id) {
+				System.out.println("MongoDb Insert 성공");
+				return 1;
+			}
+		} // 지역 내부 클래스 MongoDbQuery 끝
+		
+		System.out.println();
+		DatabaseQuery mongoDb = new MongoDbQuery();
+		result = mongoDb.insert(0);
+		System.out.println("result=" + result);
+		
+		// (지역) 익명 클래스 선언(정의)
+		DatabaseQuery msSQL = new DatabaseQuery() {
+			@Override
+			public int insert(int id) {
+				System.out.println("MS SQL...");
+				return 0;
+			}
+		};
+		
+		System.out.println();
+		result = msSQL.insert(123);
+		System.out.println("result=" + result);
+		
+	} // main() 메서드 끝
 
-}
+} // class ReviewMain5 끝
 
 class A {
 	public int number;  

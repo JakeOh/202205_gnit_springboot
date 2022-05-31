@@ -61,6 +61,7 @@ public class Car {
 	// System.out.println() 메서드 안에서 자동으로 호출되는 메서드.
 	// toString() 메서드를 작성하지 않은 경우에는
 	// "패키지이름.클래스이름@주소값" 형식의 문자열이 println()에 의해서 출력.
+	@Override  // Object 클래스의 toString 메서드를 override.
 	public String toString() {
 		return "Car 계기판{speed=" + this.speed +
 				", fuel=" + this.fuel + "}";
