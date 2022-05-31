@@ -81,6 +81,19 @@ public class ReviewMain5 {
 		result = msSQL.insert(123);
 		System.out.println("result=" + result);
 		
+		// Lambda Expression(람다 표현식):
+		// 구현해야할 메서드를 오직 하나만 갖는 인터페이스를 구현하는
+		// 익명 클래스를 간단하게 표현하는 방법.
+		// (param, ...) -> {}
+		DatabaseQuery mySQL = (id) -> {
+			System.out.println("MySQL insert...id=" + id);
+			return 1;
+		};
+		
+		System.out.println();
+		result = mySQL.insert(1020);
+		System.out.println("result=" + result);
+		
 	} // main() 메서드 끝
 
 } // class ReviewMain5 끝
