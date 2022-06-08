@@ -1,0 +1,6 @@
+# Eclipse plugins
+* Eclipse Marketplace...
+  * __Spring Tools 4__
+* Install New Softwares...
+  * __tm4e__(TextMate support in the Eclipse IDE) - http://download.eclipse.org/tm4e/snapshots/
+  * __Lombok__ - https://projectlombok.org/p2
