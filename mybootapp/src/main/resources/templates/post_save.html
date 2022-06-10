@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<title>Boot App</title>
+</head>
+<body>
+<div class="jumbotron text-center">
+    <h1>My Spring Boot App</h1>
+    <h2>새 글 작성 페이지</h2>
+</div>
+
+<nav> <!-- TODO: navigation menu를 추가하기 위해서 -->
+</nav>
+
+<form>
+    <div class="form-group">
+        <label for="title" th:text="Title"></label>
+        <input class="form-control" 
+            type="text" id="title" name="title" autofocus />
+    </div>
+    <div class="form-group">
+        <label for="content" th:text="Content"></label>
+        <textarea class="form-control" id="content" name="content"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="author" th:text="Author"></label>
+        <input class="form-control" id="author" name="author" />
+    </div>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

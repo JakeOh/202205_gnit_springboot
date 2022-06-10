@@ -43,6 +43,11 @@ public class ExampleRestController {
 		log.info("dto={}", dto);
 		
 		return dto;
+		// RestController가 Java 객체(object)를 리턴.
+		// -> 객체를 표현하는 문자열이 클라이언트로 응답(response)됨.
+		// -> 이때 Spring Boot 애플리케이션은 자바 객체의 JSON 문자열을 만들어 응답을 보냄.
+		// JSON(JavaScript Object Notation)
+		// {"var_name1":value1,"var_name2":value2,...}
 	}
 	
 }
