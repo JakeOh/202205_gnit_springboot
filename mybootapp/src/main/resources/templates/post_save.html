@@ -14,13 +14,14 @@
 </div>
 
 <nav> <!-- TODO: navigation menu를 추가하기 위해서 -->
+    <a th:href="@{/}" class="btn btn-secondary">Home</a>
 </nav>
 
 <form>
     <div class="form-group">
         <label for="title" th:text="Title"></label>
         <input class="form-control" 
-            type="text" id="title" name="title" autofocus />
+            type="text" id="title" name="title" autofocus/>
     </div>
     <div class="form-group">
         <label for="content" th:text="Content"></label>
@@ -31,8 +32,43 @@
         <input class="form-control" id="author" name="author" />
     </div>
 </form>
+<div>
+    <a th:href="@{/}" class="btn btn-secondary">취소</a>
+    <button id="btnSave" class="btn btn-success">작성완료</button>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// HTML 로딩이 끝났을 때 핸들러 함수 function()을 호출
+$(function () {
+    // id=btnSave인 버튼이 클릭됐을 때 할 일 정의 - 이벤트 핸들러 등록
+    $('#btnSave').click(function () {
+        // title, content, author 입력창에 입력되 내용을 저장하는 JavaScript 객체
+        const data = {
+            title: $('#title').val(),
+            content: $('#content').val(),
+            author: $('#author').val(),
+        };
+        console.log(data); // 브라우저 콘솔에 data 내용을 출력
+        
+        // 웹 서버로 data를 Ajax 방식으로 전송.
+        $.ajax({
+            type: 'POST',  // 요청 방식(request method)
+            url: '/api/posts',  // 요청 주소(request url)
+            dataType: 'json',  // 요청에 포함된 데이터 타입
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data),  // Ajax 요청으로 보낼 데이터
+            success: function (result) {
+                alert(result + ' 새 글 작성 성공!');
+                location.href = '/';
+            },  // 성공 응답(HTTP 200)이 왔을 때 실행할 콜백.
+            error: function (err) {
+                alert(JSON.stringify(err));
+            },  // 실패 응답이 왔을 때 실행할 콜백.
+        });
+    });
+});
+</script>
 </body>
 </html>
