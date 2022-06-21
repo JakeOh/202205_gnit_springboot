@@ -18,7 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 public class PostsApiRestController {
 	
 	private final PostsService postsService;
-	// RequiredArgsConstructor 애너테이션이 있기 때문에 의존성 주입이 됨.
+	// RequiredArgsConstructor 애너테이션이 있기 때문에 의존성 주입이 됨
+	// -> 생성자에 의한 의존성 주입.
 
 	@PostMapping("/posts")  // "/api/posts" 주소의 POST 방식 요청을 처리하는 메서드.
 	public Long save(@RequestBody PostsSaveRequestDto dto) {
