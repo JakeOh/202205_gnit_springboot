@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.mybootapp.dto.PostsFindAllResponseDto;
+import com.example.mybootapp.dto.PostsReadResponseDto;
 import com.example.mybootapp.service.PostsService;
 
 import lombok.RequiredArgsConstructor;
@@ -49,10 +50,23 @@ public class HomeController {
 		// Model model 파라미터: controller에서 view(HTML)에게 데이터를 전달하기 위해서.
 		log.info("read(id={})", id);
 		
-		// TODO: postsService의 메서드를 호출해서 해당 글 번호의 내용을 읽어옴.
+		// postsService의 메서드를 호출해서 해당 글 번호의 내용을 읽어옴.
+		PostsReadResponseDto dto = postsService.findById(id);
+		
 		// Posts의 내용을 model에 넣어서 view(HTML)에게 전달.
+		model.addAttribute("post", dto);
 		
 		return "post_read";
+	}
+	
+	@GetMapping("/update/{id}")
+	public String update(@PathVariable(name = "id") Long id, Model model) {
+		log.info("update(id={})", id);
+		
+		PostsReadResponseDto dto = postsService.findById(id);
+		model.addAttribute("post", dto);
+		
+		return "post_update";
 	}
 	
 }

@@ -1,5 +1,7 @@
 package com.example.mybootapp.web;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,15 @@ public class PostsApiRestController {
 		log.info("save(dto={}) 호출", dto);
 		
 		return postsService.save(dto);
+	}
+	
+	@DeleteMapping("/posts/{id}")
+	public Long delete(@PathVariable(name = "id") Long id) {
+		log.info("delete(id={})", id);
+		
+		Long result = postsService.deleteById(id);
+		
+		return result;
 	}
 	
 }

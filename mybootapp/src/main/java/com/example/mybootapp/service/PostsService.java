@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.mybootapp.domain.Posts;
 import com.example.mybootapp.domain.PostsRepository;
 import com.example.mybootapp.dto.PostsFindAllResponseDto;
+import com.example.mybootapp.dto.PostsReadResponseDto;
 import com.example.mybootapp.dto.PostsSaveRequestDto;
 
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,31 @@ public class PostsService {
 		log.info("list size = {}", list.size());
 		
 		return list;
+	}
+
+	@Transactional(readOnly = true)
+	public PostsReadResponseDto findById(Long id) {
+		log.info("findById(id={})", id);
+		
+		// repository를 사용해서 DB에서 id로 검색
+		Posts entity = postsRepository.findById(id).orElseThrow();
+		log.info("entity={}", entity);
+		
+		// 검색된 결과(Posts 타입)을 DTO 타입으로 변환
+		PostsReadResponseDto dto = new PostsReadResponseDto(entity);
+		log.info("dto={}", dto);
+		
+		return dto;  // controller에게 리턴.
+	}
+
+	@Transactional
+	public Long deleteById(Long id) {
+		log.info("deleteById(id={})", id);
+		
+		// repository의 메서드를 사용해서 delete SQL을 실행.
+		postsRepository.deleteById(id); // 리턴 타입: void
+		
+		return id;  // controller에게 삭제한 포스트의 PK(id)를 리턴.
 	}
 	
 }

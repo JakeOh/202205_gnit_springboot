@@ -11,12 +11,12 @@
 
 <div class="jumbotron text-center">
     <h1>My Spring Boot App</h1>
-    <h2>상세 보기 페이지</h2>
+    <h2>수정 페이지</h2>
 </div>
 
 <nav>
     <a class="btn btn-info" th:href="@{/}">Home</a>
-    <a class="btn btn-info" th:href="@{/update/{id}(id=${post.id})}">수정하기</a>
+    
 </nav>
 
 <div>
@@ -29,29 +29,54 @@
         <div class="form-group">
             <label for="title">제목</label>
             <input class="form-control" type="text" id="title"
-                th:value="${post.title}" readonly/>
+                th:value="${post.title}"/>
         </div>
         <div class="form-group">
             <label for="content">본문</label>
             <textarea class="form-control" id="content" 
-                th:text="${post.content}" readonly></textarea>
+                th:text="${post.content}"></textarea>
         </div>
         <div class="form-group">
             <label for="author">작성자</label>
             <input class="form-control" type="text" id="author"
                 th:value="${post.author}" readonly/>
         </div>
-        <div class="form-group">
-            <label for="modifiedDate">최종수정시간</label>
-            <input class="form-control" type="text" id="modifiedDate"
-                th:value="${post.modifiedDate}" readonly/>
-        </div>
     </form>
+    <div>
+        <a class="btn btn-secondary" th:href="@{/read/{id}(id=${post.id})}">취소</a>
+        <a class="btn btn-danger" id="btnDelete">삭제</a>
+        <a class="btn btn-success" id="btnUpdate">수정 완료</a>
+    </div>
 </div>
 
 <!-- jquery.slim.min.js에는 jQuery.ajax 관련 함수들이 빠져 있기 때문에 
 Ajax 기능을 사용하기 위해서는 jquery.min.js를 사용해야 함. -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+$(document).ready(function () {
+    // id="btnDelete"인 버튼이 클릭됐을 때 실행될 이벤트 핸들러를 등록.
+    $('#btnDelete').click(function () {
+        const id = $('#id').val();  // id="id"인 요소의 값(value)을 읽어옴.
+        const result = confirm('#' + id + ' 포스트를 정말 삭제할까요?');
+        if(result) {  // 사용자가 confirm 창의 "확인(OK)"를 클릭했으면
+            // 포스트 삭제를 Ajax 요청으로 보냄.
+            $.ajax({
+                type: 'DELETE',
+                url: '/api/posts/' + id,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    alert('#' + data + ' 포스트가 정상적으로 삭제됐습니다.');
+                    location.href = '/';
+                },
+                error: function (err) {
+                    alert(JSON.stringify(err));
+                },
+            });
+        }
+    });
+});
+</script>
 </body>
 </html>
