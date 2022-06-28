@@ -58,4 +58,13 @@ public class Posts extends BaseTimeEntity {
 		this.author = author;
 	}
 	
+	// entity의 title과 content를 수정하는 메서드 
+	// -> PostsService의 메서드에서 호출하게 됨. 
+	public Posts update(String title, String content) {
+		this.title = title;
+		this.content = content;
+		
+		return this;
+	}
+	
 }

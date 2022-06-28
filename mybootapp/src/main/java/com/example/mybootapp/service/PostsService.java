@@ -11,6 +11,7 @@ import com.example.mybootapp.domain.PostsRepository;
 import com.example.mybootapp.dto.PostsFindAllResponseDto;
 import com.example.mybootapp.dto.PostsReadResponseDto;
 import com.example.mybootapp.dto.PostsSaveRequestDto;
+import com.example.mybootapp.dto.PostsUpdateRequestDto;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -73,6 +74,27 @@ public class PostsService {
 		postsRepository.deleteById(id); // 리턴 타입: void
 		
 		return id;  // controller에게 삭제한 포스트의 PK(id)를 리턴.
+	}
+
+	@Transactional
+	public Long update(Long id, PostsUpdateRequestDto dto) {
+		log.info("update(id={}, dto={})", id, dto);
+		
+		// 1. id로 검색
+		// 2. 검색된 entity를 수정.
+		// -> 트랜잭션이 끝나는 시점에 Database UPDATE가 수행됨.
+		// JPA(Java Persistence API) 영속성 컨텍스트(persistence context): entity를 영구적으로 저장하는 환경.
+		// 트랜잭션 안에서 데이터베이스의 데이터(엔터티)를 읽어오면, 이 데이터는 영속성 컨텍스트가 유지된 상태.
+		// 이 상태에서 엔터티의 변경이 생기면, 트랜잭션이 끝나는 시점에 해당 테이블에 변경 내용이 반영.
+		// 즉, entity 객체를 수정하면 update 쿼리 없이 데이터베이스 수정이 가능.
+		
+		Posts entity = postsRepository.findById(id).orElseThrow();
+		log.info("수정 전 entity={}", entity);
+		
+		entity.update(dto.getTitle(), dto.getContent());
+		log.info("수정 후 entity={}", entity);
+		
+		return id;
 	}
 	
 }

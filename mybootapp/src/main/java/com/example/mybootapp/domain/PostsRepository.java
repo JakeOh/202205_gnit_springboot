@@ -1,5 +1,7 @@
 package com.example.mybootapp.domain;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 // JpaRepository<Entity 클래스 이름, PK 데이터 타입>
@@ -9,4 +11,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PostsRepository 
 	extends JpaRepository<Posts, Long> {
 
+	// Spring Data method signature - 메서드 리턴타입, 이름, 파라미터 선언.
+	
+	// Posts 테이블에서 전체 검색 결과를 id의 내림차순으로 정렬
+	// SELECT * FROM posts ORDER BY id DESC;
+	List<Posts> findByOrderByIdDesc();
+	
 }
