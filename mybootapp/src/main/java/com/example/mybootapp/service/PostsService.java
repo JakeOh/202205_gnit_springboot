@@ -42,7 +42,7 @@ public class PostsService {
 		log.info("findAll() 호출");
 		
 		List<PostsFindAllResponseDto> list =
-				postsRepository.findAll()  // List<Posts> 타입 리턴
+				postsRepository.findByOrderByIdDesc()  // List<Posts> 타입 리턴
 				.stream()  // entity -> dto로 매핑을 쉽게 하기 위해서 스트림 생성
 				.map(PostsFindAllResponseDto::new)  // entity -> dto 매핑
 				.collect(Collectors.toList());  // 최종 결과를 List로 작성.
@@ -95,6 +95,35 @@ public class PostsService {
 		log.info("수정 후 entity={}", entity);
 		
 		return id;
+	}
+
+	public List<PostsFindAllResponseDto> findByKeyword(String type, String keyword) {
+		log.info("findByKeyword(type={}, keyword={})", type, keyword);
+		
+		List<Posts> list = null;
+		switch (type) {
+		case "t":  // title로 검색
+			list = postsRepository
+			.findByTitleContainingIgnoringCaseOrderByIdDesc(keyword);
+			break;
+		case "c":  // content로 검색
+			list = postsRepository
+			.findByContentContainsIgnoreCaseOrderByIdDesc(keyword);
+			break;
+		case "tc":  // title 또는 content로 검색
+			list = postsRepository
+			.findByTitleContainsIgnoreCaseOrContentContainsIgnoreCaseOrderByIdDesc(keyword, keyword);
+			break;
+		case "a":  // author 검색
+			list = postsRepository
+			.findByAuthorContainsIgnoreCaseOrderByIdDesc(keyword);
+			break;
+		default:
+		}
+		
+		return list.stream()
+				.map(PostsFindAllResponseDto::new)
+				.collect(Collectors.toList());
 	}
 	
 }

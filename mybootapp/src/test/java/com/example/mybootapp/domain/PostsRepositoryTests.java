@@ -39,7 +39,7 @@ public class PostsRepositoryTests {
 		postsRepository.deleteAll();
 	}
 
-	@Test  // JUnit 테스트
+//	@Test  // JUnit 테스트
 	public void test() {
 		generateDummy();  // 더미 데이터를 DB table에 insert
 		
@@ -52,6 +52,47 @@ public class PostsRepositoryTests {
 		// list.get(0)의 아이디가 list.get(1)의 아이디보다 큰 경우 테스트 pass, 그렇지 않으면 fail
 		Assertions.assertTrue(list.get(0).getId() > list.get(1).getId());
 		
+	}
+	
+//	@Test
+	public void test2() {
+		generateDummy();
+		
+		List<Posts> list = postsRepository.findByTitle("TEst 2");
+		log.info(list.toString());
+		
+		Assertions.assertEquals(1, list.size());
+		Assertions.assertEquals("TEst 2", list.get(0).getTitle());
+		
+		// 영문자는 대/소문자를 구분하기 때문에 검색어의 대/소문자가 다르면 검색되지 않아야 함.
+		List<Posts> list2 = postsRepository.findByTitle("test 2");
+		Assertions.assertEquals(0, list2.size());
+		
+		// 단어가 완전히 일치하는 경우만 검색하기로 했기 때문에, 제목의 일부만으로는 검색되지 않아야 함.
+		List<Posts> list3 = postsRepository.findByTitle("test");
+		Assertions.assertEquals(0, list3.size());
+	}
+	
+//	@Test
+	public void test3() {
+		generateDummy();
+		
+		List<Posts> list = postsRepository
+				.findByTitleContainingIgnoringCase("tESt");
+		log.info(list.toString());
+		
+	}
+	
+	@Test
+	public void test4() {
+		generateDummy();
+		
+		List<Posts> list = postsRepository
+				.findByTitleContainingIgnoringCaseOrderByIdDesc("est");
+		log.info(list.toString());
+		
+		Assertions.assertEquals(2, list.size());
+		Assertions.assertTrue(list.get(0).getId() > list.get(1).getId());
 	}
 	
 }

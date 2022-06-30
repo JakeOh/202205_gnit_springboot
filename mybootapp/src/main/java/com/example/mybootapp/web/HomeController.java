@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.mybootapp.dto.PostsFindAllResponseDto;
 import com.example.mybootapp.dto.PostsReadResponseDto;
@@ -67,6 +68,19 @@ public class HomeController {
 		model.addAttribute("post", dto);
 		
 		return "post_update";
+	}
+	
+	@GetMapping("/search")
+	public String search(@RequestParam(name = "searchType") String type,
+			@RequestParam(name = "searchKeyword") String keyword,
+			Model model) {
+		log.info("search(type={}, keyword={})", type, keyword);
+		
+		List<PostsFindAllResponseDto> list = 
+				postsService.findByKeyword(type, keyword);
+		model.addAttribute("posts", list);
+		
+		return "index";
 	}
 	
 }
