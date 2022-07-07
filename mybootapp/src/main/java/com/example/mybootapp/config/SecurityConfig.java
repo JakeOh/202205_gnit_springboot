@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.roles("USER");
 	}
 
-	@Bean
+	@Bean  // Spring 컨텍스트에서 생성하고 관리하는 객체. 필요한 곳에 주입(inject)될 수 있음.
 	public PasswordEncoder pwdEncoder() {
 		return new BCryptPasswordEncoder();
 	}
