@@ -49,8 +49,8 @@ public class UsersController {
 		Long id = usersService.registerUser(dto);
 		log.info("registerd id={}", id);
 		
-		// TODO: 회원 가입 성공 후 이동할 페이지
-		return "index";
+		// 회원 가입 성공 후 이동할 페이지 -> 로그인 페이지로 이동.
+		return "redirect:/login";  // 새로운 요청을 생성.
 	}
 
 }

@@ -2,12 +2,14 @@ package com.example.mybootapp.web;
 
 import java.util.List;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.mybootapp.domain.Users;
 import com.example.mybootapp.dto.PostsFindAllResponseDto;
 import com.example.mybootapp.dto.PostsReadResponseDto;
 import com.example.mybootapp.service.PostsService;
@@ -26,15 +28,19 @@ public class HomeController {
 	private final PostsService postsService;
 	
 	@GetMapping("/")
-	public String index(Model model) {
+	public String index(@AuthenticationPrincipal Users user,
+			Model model) {
 		// 파라미터 Model: controller에서 view(HTML)로 전달할 데이터가 있을 때 사용.
 		
-		log.info("index() 호출...");
+		log.info("index(user={}) 호출...", user);
 		
 		// Service 객체를 사용해서 DB 테이블(posts)의 모든 내용을 읽어 온다(SELECT).
 		List<PostsFindAllResponseDto> list = postsService.findAll();
 		// DB에서 select한 리스트를 Model 객체를 사용해서 view에 전달.
 		model.addAttribute("posts", list);
+		
+		// AuthenticationPrincipal을 Model에 추가
+		model.addAttribute("authUser", user);
 		
 		return "index";
 	}
@@ -81,6 +87,12 @@ public class HomeController {
 		model.addAttribute("posts", list);
 		
 		return "index";
+	}
+	
+	@GetMapping("/login")
+	public String login() {
+		log.info("login() 호출");
+		return "user_signin";
 	}
 	
 }

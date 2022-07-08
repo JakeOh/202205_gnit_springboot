@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,13 +15,21 @@
 </div>
 
 <nav> <!-- 같은 웹 서버 내에서 다른 페이지로 이동하는 메뉴들 -->
-    <!-- TODO: 로그인 된 상태에서는 로그아웃 메뉴 보여주기 -->
+    <!-- 로그인 된 상태에서는 로그아웃 메뉴 보여주기 -->
+    <!-- thymeleaf 템플릿 엔진이 사용자 인증 여부를 확인하려면,  
+    즉, isAuthenticated() 또는 isAnonymous() 메서드를 사용할 수 있으려면,
+    controller에서 AuthenticationPrincipal을 템플릿 엔진에게 전달해야 함.
+    -->
+    <div sec:authorize="isAuthenticated()">
+        <span sec:authentication="name"></span>님,
+        <a class="btn btn-light" th:href="@{/logout}">로그아웃</a>
+    </div>
     
-    <!-- TODO: 로그인 안 된 상태에서만 로그인, 회원가입 메뉴 보여 주기 -->
-    <span>
+    <!-- 로그인 안 된 상태에서만 로그인, 회원가입 메뉴 보여 주기 -->
+    <div sec:authorize="isAnonymous()">
         <a class="btn btn-info" th:href="@{/login}">로그인</a>
         <a class="btn btn-info" th:href="@{/user/signup}">회원가입</a>
-    </span>
+    </div>
 
     <a class="btn btn-info" th:href="@{/save}">새 글 작성</a>
 </nav>

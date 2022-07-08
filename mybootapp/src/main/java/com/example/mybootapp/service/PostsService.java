@@ -24,7 +24,7 @@ public class PostsService {
 	
 	// final 멤버 변수: arg 있는 생성자에 의해서 의존성이 자동 주입.
 	private final PostsRepository postsRepository;
-
+	
 	@Transactional
 	public Long save(PostsSaveRequestDto dto) {
 		// repository 객체를 사용해서 DB 테이블에 post를 저장(insert)하고,
