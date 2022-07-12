@@ -56,7 +56,8 @@ public class PostsService {
 		log.info("findById(id={})", id);
 		
 		// repository를 사용해서 DB에서 id로 검색
-		Posts entity = postsRepository.findById(id).orElseThrow();
+		Posts entity = postsRepository.findById(id).orElseThrow(() -> 
+				new IllegalArgumentException("No posts with id=" + id));
 		log.info("entity={}", entity);
 		
 		// 검색된 결과(Posts 타입)을 DTO 타입으로 변환
@@ -88,7 +89,8 @@ public class PostsService {
 		// 이 상태에서 엔터티의 변경이 생기면, 트랜잭션이 끝나는 시점에 해당 테이블에 변경 내용이 반영.
 		// 즉, entity 객체를 수정하면 update 쿼리 없이 데이터베이스 수정이 가능.
 		
-		Posts entity = postsRepository.findById(id).orElseThrow();
+		Posts entity = postsRepository.findById(id).orElseThrow(() ->
+				new IllegalArgumentException("No posts with id=" + id));
 		log.info("수정 전 entity={}", entity);
 		
 		entity.update(dto.getTitle(), dto.getContent());
