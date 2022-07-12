@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,8 +14,15 @@
     <h2>새 글 작성 페이지</h2>
 </div>
 
-<nav> <!-- TODO: navigation menu를 추가하기 위해서 -->
-    <a th:href="@{/}" class="btn btn-info">Home</a>
+<nav> <!-- navigation menu를 추가하기 위해서 -->
+    <!-- 로그아웃 버튼 보여주기 -->
+    <div sec:authorize="isAuthenticated()">
+        <span sec:authentication="name"></span>님,
+        <a class="btn btn-light" th:href="@{/logout}">로그아웃</a>
+    </div>
+    <div>
+        <a th:href="@{/}" class="btn btn-info">Home</a>
+    </div>
 </nav>
 
 <form>
@@ -29,7 +37,9 @@
     </div>
     <div class="form-group">
         <label for="author" th:text="Author"></label>
-        <input class="form-control" id="author" name="author" />
+        <!-- 로그인한 사용자 이름(username)을 자동으로 채우고 읽기 전용(편집 불가)로 만듦. -->
+        <input class="form-control" id="author" name="author" 
+            th:value="${#authentication.name}" readonly />
     </div>
 </form>
 <div>
@@ -51,6 +61,10 @@ $(function () {
             author: $('#author').val(),
         };
         console.log(data); // 브라우저 콘솔에 data 내용을 출력
+        
+        // TODO: title, content에 문자열이 입력됐는 지를 체크하고
+        // 입력된 경우에는 아래의 Ajax 요청을 전송.
+        // 입력되지 않은 경우에는 경고창 보여주기. 
         
         // 웹 서버로 data를 Ajax 방식으로 전송.
         $.ajax({
